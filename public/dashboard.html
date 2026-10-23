@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Dashboard</title>
+
+<style>
+body {
+  background: #0f0f0f;
+  color: white;
+  font-family: Arial;
+  padding: 15px;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  color: white;
+}
+
+.stop { background: red; }
+.clear { background: gray; }
+
+.card {
+  background: rgba(255,255,255,0.08);
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+.time {
+  font-size: 12px;
+  opacity: 0.7;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="top">
+  <h2>🚨 Alerts</h2>
+  <div>
+    <button class="stop" onclick="stopSound()">Stop Sound</button>
+    <button class="clear" onclick="clearAlerts()">Clear</button>
+  </div>
+</div>
+
+<div id="alertsList"></div>
+
+<audio id="alertSound">
+  <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" type="audio/ogg">
+</audio>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+<script>
+var firebaseConfig = {
+  apiKey: "AIzaSy...",
+  authDomain: "iotlab-c60d7.firebaseapp.com",
+  projectId: "iotlab-c60d7"
+};
+
+firebase.initializeApp(firebaseConfig);
+var db = firebase.firestore();
+
+let lastCount = 0;
+
+// 🔊 PLAY SOUND SIMPLE WAY
+function playSound() {
+  const audio = document.getElementById("alertSound");
+  audio.pause();
+  audio.currentTime = 0;
+  audio.play().catch(()=>{});
+}
+
+// 🔇 STOP
+function stopSound() {
+  const audio = document.getElementById("alertSound");
+  audio.pause();
+  audio.currentTime = 0;
+}
+
+// 🔁 CHECK EVERY 3 SEC (THIS IS WHY OLD ONE WORKED)
+function loadAlerts() {
+
+  db.collection("alerts")
+    .orderBy("createdAt", "desc")
+    .limit(10)
+    .get()
+    .then(snapshot => {
+
+      // 🔥 SOUND TRIGGER (WORKING LOGIC)
+      if (snapshot.size > lastCount && lastCount !== 0) {
+        playSound();
+      }
+
+      lastCount = snapshot.size;
+
+      const container = document.getElementById("alertsList");
+      container.innerHTML = "";
+
+      snapshot.forEach(doc => {
+        const data = doc.data();
+
+        let time = "";
+        if (data.createdAt) {
+          time = new Date(data.createdAt.seconds * 1000).toLocaleString();
+        }
+
+        const div = document.createElement("div");
+        div.className = "card";
+
+        div.innerHTML = `
+          <div><b>Emergency Alert</b></div>
+          <a target="_blank" href="https://maps.google.com/?q=${data.location}">
+            Open Location
+          </a>
+          <div class="time">${time}</div>
+        `;
+
+        container.appendChild(div);
+      });
+
+    });
+}
+
+// 🗑️ CLEAR
+function clearAlerts() {
+  db.collection("alerts").get().then(snapshot => {
+    snapshot.forEach(doc => doc.ref.delete());
+  });
+}
+
+// 🔁 RUN EVERY 3 SECONDS
+setInterval(loadAlerts, 3000);
+window.onload = loadAlerts;
+</script>
+
+</body>
+</html>
