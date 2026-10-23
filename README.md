@@ -12,8 +12,6 @@ Silent SOS is a browser-based Progressive Web App (PWA) designed to enable discr
 
 **[Watch the Silent SOS Demonstration Video](https://drive.google.com/file/d/1v3m12jE2PWNOE4jL-Zr4SrB4dyT7rFOb/view?usp=drivesdk)**
 
-If the video is inaccessible, check that Google Drive Link.
-
 ## Overview
 
 In an emergency, a person may not be able to make a phone call or visibly operate an emergency application. Silent SOS explores an alternative by allowing a user to trigger an alert through a discreet gesture on a supported mobile device.
