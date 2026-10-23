@@ -1,161 +1,132 @@
 # Silent SOS — Covert Emergency Alert System
 
-A browser-based Progressive Web App (PWA) designed to enable discreet emergency alerting through a hidden multi-finger gesture.
+Silent SOS is a browser-based Progressive Web App (PWA) designed to enable discreet emergency alerting through a hidden multi-finger gesture. It captures the user's location, synchronizes emergency alerts with Firebase, and provides a dashboard for monitoring alerts.
 
 ## Live Application
 
 **[Open Silent SOS](https://iotlab-c60d7.web.app)**
 
-> **Platform Availability:** The live application currently works on mobile devices only. Desktop and laptop support is not yet available.
+> **Platform availability:** The deployed application currently works on mobile devices only. Desktop and laptop support is not yet available.
 
 ## Project Demonstration
 
-**[▶ Watch the Silent SOS Demonstration Video](https://drive.google.com/file/d/1v3m12jE2PWNOE4jL-Zr4SrB4dyT7rFOb/view?usp=drivesdk)**
+**[Watch the Silent SOS Demonstration Video](https://drive.google.com/file/d/1v3m12jE2PWNOE4jL-Zr4SrB4dyT7rFOb/view?usp=drivesdk)**
 
-The demonstration video showcases the project interface and its emergency alert workflow.
-
-*Note: The video must have appropriate Google Drive sharing permissions enabled for viewers to access it.*
+If the video is inaccessible, check that Google Drive Link.
 
 ## Overview
 
-Silent SOS is an academic project developed to help users discreetly trigger an emergency alert in situations where visibly seeking help may be unsafe.
+In an emergency, a person may not be able to make a phone call or visibly operate an emergency application. Silent SOS explores an alternative by allowing a user to trigger an alert through a discreet gesture on a supported mobile device.
 
-The application uses a notes-style interface to conceal the alert trigger and connects to Firebase Cloud Firestore for alert storage and real-time updates on a security dashboard.
+When an alert is triggered, the application captures location information when permission is granted and stores the alert in Cloud Firestore. A dashboard displays incoming alerts, and the implemented email service provides email notifications.
 
 ## Key Features
 
-- **Covert Gesture Detection:** Detects a configured hidden multi-finger touch gesture.
-- **GPS Location Capture:** Uses the browser Geolocation API to obtain the user's coordinates, subject to permission.
-- **Real-Time Alert Storage:** Stores emergency alert information in Firebase Cloud Firestore.
-- **Security Dashboard:** Displays incoming alerts with location links and timestamps.
-- **Alert Sound Controls:** Provides controls to stop the alert sound and clear the displayed alerts.
-- **Progressive Web App:** Provides a browser-based mobile experience without requiring installation through an app store.
+- **Discreet Gesture Activation:** Uses a hidden multi-finger gesture to trigger an emergency alert.
+- **GPS Location Capture:** Captures location coordinates when browser permissions and device location services are available.
+- **Real-Time Alert Synchronization:** Uses Firebase Cloud Firestore to store and synchronize alert information.
+- **Emergency Dashboard:** Displays emergency alert records and associated location information.
+- **Location Access:** Provides an option to open an alert location on a map.
+- **Email Notifications:** Uses the implemented email service to send emergency alert notifications.
+- **Alert Controls:** Includes dashboard controls for stopping alert sounds and clearing displayed alerts.
+- **Progressive Web App:** Includes a web app manifest, service worker, and application icons.
 
 ## Technology Stack
 
-| Component | Technology |
+| Technology | Purpose |
 |---|---|
-| Frontend | HTML5, CSS3, JavaScript |
-| Gesture Detection | Browser Touch Events API |
-| Location Services | Geolocation API |
-| Database | Firebase Cloud Firestore |
-| Real-Time Updates | Firestore listeners |
-| Hosting | Firebase Hosting |
-| Application Type | Progressive Web App (PWA) |
+| HTML | Application structure |
+| CSS | User interface styling |
+| JavaScript | Gesture handling and application logic |
+| Firebase Cloud Firestore | Alert data storage and synchronization |
+| Firebase Hosting | Application deployment |
+| Browser Geolocation API | Location capture, subject to permissions |
+| Progressive Web App technologies | Manifest, service worker, and application icons |
+| Email service | Emergency email notifications |
 
 ## System Architecture
 
-The application follows a browser-to-cloud architecture:
+Silent SOS follows this general workflow:
 
-1. **User Interface:** The user interacts with the notes-style mobile interface.
-2. **Gesture Detection:** JavaScript detects the configured touch gesture.
-3. **Location Capture:** The browser attempts to obtain the device's location.
-4. **Data Transmission:** Alert information is sent to Firebase Cloud Firestore.
-5. **Real-Time Dashboard:** The security dashboard receives and displays alert records.
-
-### Architecture Diagram
-
-![Silent SOS System Architecture](assets/project-architecture.png)
-
-## Screenshots
-
-### Security Dashboard
-
-The dashboard displays emergency alerts, location links, timestamps, and sound controls.
-
-![Silent SOS Security Dashboard](assets/security-dashboard.jpg)
-
-### Mobile Application
-
-The mobile interface is designed to resemble a notes application.
-
-![Silent SOS Mobile Interface](assets/mobile-interface.jpg)
+1. The user performs the configured emergency gesture on a supported mobile device.
+2. The application detects the gesture and obtains location information when permitted.
+3. Emergency alert data is stored in Cloud Firestore.
+4. The dashboard receives and displays the available alert information.
+5. The configured email service sends emergency email notifications.
+6. The user can view the reported location and use the available dashboard controls.
 
 ## Repository Structure
 
 ```text
 silent-sos/
-├── README.md
-├── .gitignore
-├── .firebaserc
-├── firebase.json
+├── assets/
+│   ├── dashboard alerts for security.jpg
+│   ├── firebase database.jpeg
+│   ├── project architecture.jpeg
+│   └── demonstration of functionality.mp4
 ├── public/
-│   ├── index.html
 │   ├── dashboard.html
 │   ├── gesture.js
-│   ├── manifest.json
-│   ├── service-worker.js
 │   ├── icon-192.png
-│   └── icon-512.png
-├── assets/
-│   ├── security-dashboard.jpg
-│   ├── project-architecture.png
-│   └── mobile-interface.mp4
-└── docs/
-    └── project-report.pdf
+│   ├── icon-512.png
+│   ├── index.html
+│   ├── manifest.json
+│   └── service-worker.js
+├── .firebaserc
+├── .gitignore
+├── firebase.json
+└── README.md
 ```
-
-*This is the intended repository layout. Optional files and folders should be included only when they exist.*
 
 ## Getting Started
 
-### Prerequisites
+### Option 1: Use the Live Application
 
-- A modern mobile browser
-- A Firebase project
-- Firebase Cloud Firestore configured for the application
-- Firebase Hosting configuration
+Open [Silent SOS](https://iotlab-c60d7.web.app) on a supported mobile device.
 
-### Run Locally
+### Option 2: Clone the Repository
 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/YOUR-USERNAME/silent-sos.git
+   git clone https://github.com/mdighouse2006-cn/silent-sos.git
    ```
 
-2. Navigate to the project directory:
+2. Open the cloned project folder.
+3. Review `firebase.json` to understand the Firebase Hosting configuration.
+4. Install the Firebase CLI if you need to run or deploy the application using Firebase tools.
+5. Ensure the required Firebase configuration and email service settings are available before testing locally.
 
-   ```bash
-   cd silent-sos
-   ```
-
-3. Review the Firebase configuration and configure your own Firebase project if necessary.
-
-4. Serve the `public` directory using a local development server.
-
-5. Open the application on a supported mobile browser and grant location permission when prompted.
-
-**Security note:** Review Firestore security rules before deploying or testing with sensitive information. Never commit service-account private keys or credentials to GitHub.
+Local execution may require additional configuration. A basic static file server alone may not reproduce every deployed feature.
 
 ## Current Limitations
 
-- The live application currently supports mobile devices only.
-- Browser permissions and network connectivity affect location capture and alert delivery.
-- Authentication and role-based dashboard access require further implementation if not already configured.
-- Automated SMS are planned enhancements unless separately implemented.
-- The project is an academic prototype and is not a substitute for official emergency services.
+- The deployed application currently supports mobile devices only.
+- Location capture depends on browser permissions, device location services, and network availability.
+- Alert synchronization and email notifications depend on the configured Firebase services, email service, and network connectivity.
+- SMS notifications to trusted contacts have not yet been implemented.
+- The application is a prototype and should not be relied upon as a substitute for official emergency services.
 
 ## Future Enhancements
 
-- Firebase Authentication and role-based access control
-- Secure trusted-contact management
-- Automated SMS notifications
-- Improved offline handling and error recovery
-- Expanded device and browser compatibility
-- Additional testing and performance evaluation
+- Extend and test compatibility with desktop and laptop devices.
+- Implement SMS notifications to trusted contacts through an appropriate backend service.
+- Improve alert authentication, authorization, and access control.
+- Improve reliability, error handling, and location-sharing workflows.
+- Conduct broader usability and device-compatibility testing.
 
 ## Contributors
 
 - MD Ibrahim Ghouse
 - U. Mahendra
 
+## Security
 
-## Academic Information
-
-**Department:** Computer Science and Engineering (Artificial Intelligence and Machine Learning)  
-**Institution:** Gokaraju Rangaraju Institute of Engineering and Technology (GRIET)
+Do not commit private service-account keys, passwords, or other secrets to this public repository. Review Firebase Security Rules and ensure that emergency alerts and location data are accessible only to authorized users.
 
 ---
 
-*Silent SOS is an academic prototype developed to explore discreet emergency alerting using web technologies and cloud-based real-time data storage.*
+*Silent SOS — discreet emergency alerting using browser technologies and Firebase.*
+
+
+*Silent SOS — discreet emergency alerting using browser technologies and Firebase.*
