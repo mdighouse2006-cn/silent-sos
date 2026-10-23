@@ -123,8 +123,5 @@ Local execution may require additional configuration. A basic static file server
 Do not commit private service-account keys, passwords, or other secrets to this public repository. Review Firebase Security Rules and ensure that emergency alerts and location data are accessible only to authorized users.
 
 ---
-
 *Silent SOS — discreet emergency alerting using browser technologies and Firebase.*
 
-
-*Silent SOS — discreet emergency alerting using browser technologies and Firebase.*
